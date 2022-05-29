@@ -37,14 +37,20 @@ tsum.test(mean.x=23500, sd(3900), n.x=100, var.equal = TRUE, alternative = "grea
 
 
 #Soal 3
+library(BSDA)
 
 #a
-#H0: rata-rata saham bandung == saham bali
-#H1: rata-rata saham bandung != saham bali
+#H0: rata-rata saham bandung == rata-ratasaham bali
+#H1: rata-rata saham bandung != rata-rata saham bali
 
 #b
+tsum.test(mean.x=3.64, s.x = 1.67, n.x = 19, mean.y =2.79 , s.y = 1.32, n.y = 27, alternative = "greater", var.equal = TRUE)
 
+#e
+#H0 ditolak
 
+#f
+#Kesimpulannya adalah rata-rata saham bandung != rata-rata saham .
 
 #Soal 4
 kucingITS <- read.table(url("https://rstatisticsandresearch.weebly.com/uploads/1/0/2/6/1026585/onewayanova.txt"),h=T)
