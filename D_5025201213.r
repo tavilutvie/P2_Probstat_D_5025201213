@@ -67,8 +67,8 @@ qqline(Group1$Length)
 qqnorm(Group2$Length)
 qqline(Group2$Length)
 
-qqnorm(Group2$Length)
-qqline(Group2$Length)
+qqnorm(Group3$Length)
+qqline(Group3$Length)
 
 #b
 bartlett.test(Length ~ Group, data = kucingITS)
