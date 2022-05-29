@@ -98,7 +98,12 @@ qqline(Group2$Length)
 qqnorm(Group2$Length)
 qqline(Group2$Length)
 ```
-![image](https://user-images.githubusercontent.com/85897222/170879719-61f33bc3-2708-48f4-a88c-55270250382d.png)
+Group1: <br>
+![image](https://user-images.githubusercontent.com/85897222/170880649-671f5652-373d-4771-8d7b-9ebfc2fb5911.png) <br>
+Group2: <br>
+![image](https://user-images.githubusercontent.com/85897222/170879719-61f33bc3-2708-48f4-a88c-55270250382d.png) <br>
+Group3: <br>
+![image](https://user-images.githubusercontent.com/85897222/170880583-34d89465-3cc7-46cc-afd7-caaa20357a5f.png) <br>
 
 ### 4b
 carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ? <br>
