@@ -26,17 +26,71 @@ library(BSDA)
 #setuju
 
 #b
-mobil.test(mean.x=23500, sd(3900), n.x=100)
+tsum.test(mean.x=23500, sd(3900), n.x=100, var.equal = TRUE, alternative = "greater", mu = 20000)
 
-#Berdasarkan output yang dihasilkan, diperoleh nilai thitung = 12.013,
-dengan derajat bebas 70 dan nilai p-value < 2.2e-16. Dari hasil tersebut
-peneliti dapat menolak hipotesis awal dan disimpulkan bahwa terdapat cukup
-bukti di mana rata-rata dari variabel weight secara signifikan adalah tidak
-sama dengan 150. Selain itu, dari output di atas, kita juga peroleh selang
-kepercayaan rata-rata dari sampel yang berkisar di antara 242.8301 dan
-279.7896 atau dapat dinyatakan bahwa dengan selang kepercayaan 95% kita
-yakin rata-rata weight akan berkisar antara 242.8301 sampai 279.7896.
-Rata-rata weight dari data sampel yang dihitung adalah 261.3099.
+#Berdasarkan output yang dihasilkan, diperoleh bahwa:
+#H0 dengan ??=20000 dan H1 dengan ??>20000
 
 #c
+#Dengan menggunakan rumus, didapatkan z = 8.97 dan P(Z > 8.97) = 1 - P(Z < 8.97).
 #Hipotesis nol berlaku. Kesimpulannya adalah mobil dikemudikan rata-rata lebih dari 20.000 kilometer per tahun.
+
+
+
+#Soal3
+
+#a
+#H0:
+z1=(3.64-0)/(1.67/sqrt(19))
+#H1:
+z2=(2.79-0)/(1.32/sqrt(27))
+
+#b
+
+
+#Soal4
+#a
+dataoneway <- read.table(url("https://rstatisticsandresearch.weebly.com/uploads/1/0/2/6/1026585/onewayanova.txt"),h=T)
+attach(dataoneway)
+names(dataoneway)
+
+dataoneway$Group <- as.factor(dataoneway$Group)
+dataoneway$Group = factor(dataoneway$Group,labels = c("Kucing oren", "Kucing hitam", "Kucing putih"))
+
+class(dataoneway$Group)
+
+Group1 <- subset(dataoneway, Group == "Kucing oren")
+Group2 <- subset(dataoneway, Group == "Kucing hitam")
+Group3 <- subset(dataoneway, Group == "Kucing putih")
+
+#b
+bartlett.test(Length ~ Group, data = dataoneway)
+#Kesimpulannya: Bartlett's K-squared = 0.43292, df = 2, dan p-value = 0.08054
+
+#c
+qqnorm(Group1$Length)
+qqline(Group1$Length)
+
+qqnorm(Group2$Length)
+qqline(Group2$Length)
+
+qqnorm(Group2$Length)
+qqline(Group2$Length)
+
+#d
+pvalue = 0.8054
+#H0 ditolak
+
+#e
+model1 = lm(Length ~ Group, data = dataoneway)
+anova(model1)
+TukeyHSD(aov(model1))
+
+#f
+install.packages("ggplot2")
+library("ggplot2")
+
+ggplot(dataoneway, aes(x = Group, y = Length)) + geom_boxplot(fill = "grey80", colour = "black") + scale_x_discrete() + xlab("Treatment Group") + ylab("Length (cm)")
+
+#Soal5
+
