@@ -66,8 +66,24 @@ Asumsikan nilai variancenya sama, apakah ada perbedaan pada rata-ratanya (α= 0.
 
 ### 3a
 H0 dan H1 <br>
-H0: rata-rata saham bandung == saham bali <br>
-H1: rata-rata saham bandung != saham bali <br>
+H0: rata-rata saham bandung == rata-rata saham bali <br>
+H1: rata-rata saham bandung != rata-rata saham bali <br>
+
+### 3b
+Hitung Sampel Statistik <br>
+digunakan fungsi tsum.test(). <br>
+```r
+tsum.test(mean.x=3.64, s.x = 1.67, n.x = 19, mean.y =2.79 , s.y = 1.32, n.y = 27, alternative = "greater", var.equal = TRUE)
+```
+![image](https://user-images.githubusercontent.com/85897222/170881215-85f1f425-c9ff-449a-b986-690ac68f1387.png)
+
+### 3e
+Keputusan <br>
+H0 ditolak. <br>
+
+### 3f
+Kesimpulan <br>
+Kesimpulannya adalah rata-rata saham bandung != rata-rata saham bali. <br>
 
 ## Soal 4
 Seorang Peneliti sedang meneliti spesies dari kucing di ITS . Dalam penelitiannya ia mengumpulkan data tiga spesies kucing yaitu kucing oren, kucing hitam dan kucing putih dengan panjangnya masing-masing. <br>
@@ -130,6 +146,7 @@ pvalue = 0.0013 < tingkat signifikansi(0.5). H0 ditolak. <br>
 
 ### 4e
 Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain? Jelaskan. <br>
+Digunakan fungsi aov() dan TukeyHSD(). <br>
 ```r
 TukeyHSD(aov(model1))
 ``` 
