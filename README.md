@@ -16,7 +16,7 @@ selisih = y - x
 standardeviasi = sd(selisih)
 standardeviasi
 ```
-![image](https://user-images.githubusercontent.com/85897222/170874814-9c3461f4-a53a-466c-a2af-e6ac37f5711b.png)
+![image](https://user-images.githubusercontent.com/85897222/170876802-aa060d1c-4a51-4c9b-b3d8-6f256033d7ea.png)
 
 ### 1b
 carilah nilai t (p-value) <br>
@@ -25,7 +25,7 @@ t(p-value) didapatkan dengan menghitung menggunakan rumus.
 t = 2 * pt(-abs(( (mean(selisih) - 0) / (standardeviasi / sqrt(9)))), df=8)
 t
 ```
-![image](https://user-images.githubusercontent.com/85897222/170874855-09dd63d9-6871-44a2-b82c-f732ef31d4ca.png)
+![image](https://user-images.githubusercontent.com/85897222/170877098-5ce6fda9-9458-4321-bb70-8fe414477ce0.png)
 
 ### 1c
 tentukanlah apakah terdapat pengaruh yang signifikan secara statistika dalam hal kadar saturasi oksigen , sebelum dan sesudah melakukan aktivitas 𝐴 jika diketahui tingkat signifikansi 𝛼 = 5% serta H0 : “tidak ada pengaruh yang signifikan secara statistika dalam hal kadar saturasi oksigen , sebelum dan sesudah melakukan aktivitas 𝐴” <br>
@@ -34,8 +34,9 @@ melihat hasil komparasi menggunakan var.test() dan untuk melihat pengaruhnya dig
 var.test(x, y)
 t.test(x, y, mu = 0, alternative = "two.sided", var.equal = TRUE, conf.level = 0.95)
 ```
+![image](https://user-images.githubusercontent.com/85897222/170877133-2fe6e47b-eeac-4691-b164-c69c0bcd1bac.png)
 P-value lebih kecil dibandingkan tingkat signifikansi (0,05) maka hipotesis nol tidak berlaku. <br>
-![image](https://user-images.githubusercontent.com/85897222/170874239-f206b468-d64e-4157-ad2c-dbb0c414b095.png)
+
 
 ## Soal 2
 Diketahui bahwa mobil dikemudikan rata-rata lebih dari 20.000 kilometer per tahun. Untuk menguji klaim ini, 100 pemilik mobil yang dipilih secara acak diminta untuk mencatat jarak yang mereka tempuh. Jika sampel acak menunjukkan rata-rata 23.500 kilometer dan standar deviasi 3900 kilometer. <br>
@@ -65,13 +66,8 @@ Asumsikan nilai variancenya sama, apakah ada perbedaan pada rata-ratanya (α= 0.
 
 ### 3a
 H0 dan H1 <br>
-Menghitung z dengan rumus. <br>
-```r
-#H0:
-z1=(3.64-0)/(1.67/sqrt(19))
-#H1:
-z2=(2.79-0)/(1.32/sqrt(27))
-```
+H0: rata-rata saham bandung == saham bali <br>
+H1: rata-rata saham bandung != saham bali <br>
 
 ## Soal 4
 Seorang Peneliti sedang meneliti spesies dari kucing di ITS . Dalam penelitiannya ia mengumpulkan data tiga spesies kucing yaitu kucing oren, kucing hitam dan kucing putih dengan panjangnya masing-masing. <br>
@@ -82,36 +78,17 @@ Maka Kerjakan atau Carilah: <br>
 
 ### 4a
 Buatlah masing masing jenis spesies menjadi 3 subjek "Grup" (grup 1,grup 2,grup 3). Lalu Gambarkan plot kuantil normal untuk setiap kelompok dan lihat apakah ada outlier utama dalam homogenitas varians. <br>
-Dilakukan read dan membuat grup untuk masing-masing jenis spesies dengan potongan kode berikut. <br>
+Dilakukan perlukan independen variabel berupa factor. qqnorm() dan qqline() digunakan untuk gambar plot kuantil. <br>
 ```r
-dataoneway <- read.table(url("https://rstatisticsandresearch.weebly.com/uploads/1/0/2/6/1026585/onewayanova.txt"),h=T)
-attach(dataoneway)
-names(dataoneway)
+kucingITS$Group <- as.factor(kucingITS$Group)
+kucingITS$Group = factor(kucingITS$Group,labels = c("Kucing oren", "Kucing hitam", "Kucing putih"))
 
-dataoneway$Group <- as.factor(dataoneway$Group)
-dataoneway$Group = factor(dataoneway$Group,labels = c("Kucing oren", "Kucing hitam", "Kucing putih"))
+class(kucingITS$Group)
 
-class(dataoneway$Group)
+Group1 <- subset(kucingITS, Group == "Kucing oren")
+Group2 <- subset(kucingITS, Group == "Kucing hitam")
+Group3 <- subset(kucingITS, Group == "Kucing putih")
 
-Group1 <- subset(dataoneway, Group == "Kucing oren")
-Group2 <- subset(dataoneway, Group == "Kucing hitam")
-Group3 <- subset(dataoneway, Group == "Kucing putih")
-```
-![image](https://user-images.githubusercontent.com/85897222/170875424-b7624127-97a5-4171-9cf6-c4bf199f0f9e.png)
-
-### 4b
-carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ? <br>
-memeriksa homogenety varian dengan bartlett.test().
-```r
-bartlett.test(Length ~ Group, data = dataoneway)
-```
-Kesimpulannya: Bartlett's K-squared = 0.43292, df = 2, dan p-value = 0.08054 <br>
-![image](https://user-images.githubusercontent.com/85897222/170875478-af61405d-80fe-427c-9a6d-2d25aa69acb0.png)
-
-### 4c
-Untuk uji ANOVA (satu arah), buatlah model linier dengan Panjang versus Grup dan beri nama model tersebut model 1. <br>
-Digunakan qqnorm() dan qqline() <br>
-```r
 qqnorm(Group1$Length)
 qqline(Group1$Length)
 
@@ -120,32 +97,99 @@ qqline(Group2$Length)
 
 qqnorm(Group2$Length)
 qqline(Group2$Length)
+```
+![image](https://user-images.githubusercontent.com/85897222/170879719-61f33bc3-2708-48f4-a88c-55270250382d.png)
+
+### 4b
+carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ? <br>
+memeriksa homogenety varian dengan bartlett.test().
+```r
+bartlett.test(Length ~ Group, data = kucingITS)
+```
+p-value = 0.08054 <br>
+Kesimpulannya: Bartlett's K-squared = 0.43292 dan df = 2 <br>
+![image](https://user-images.githubusercontent.com/85897222/170879892-9e2e69fd-572e-4259-8762-118656cc9568.png)
+
+### 4c
+Untuk uji ANOVA (satu arah), buatlah model linier dengan Panjang versus Grup dan beri nama model tersebut model 1. <br>
+Digunakan lm() dan anova() <br>
+```r
+model1 = lm(Length ~ Group, data = kucingITS)
+anova(model1)
 ``` 
-![image](https://user-images.githubusercontent.com/85897222/170875601-f580080c-b064-4fd5-b9a4-d9b57d217b63.png)
+![image](https://user-images.githubusercontent.com/85897222/170879961-f1f8b549-5e40-41b2-8a65-290bac2dbacc.png)
 
 ### 4d
 Dari Hasil Poin C, Berapakah nilai-p ? , Apa yang dapat Anda simpulkan dari H0? <br>
-```r
-pvalue = 0.8054
-``` 
-H0 ditolak <br>
+pvalue = 0.0013 < tingkat signifikansi(0.5). H0 ditolak. <br>
 
 ### 4e
 Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain? Jelaskan. <br>
 ```r
-model1 = lm(Length ~ Group, data = dataoneway)
-anova(model1)
 TukeyHSD(aov(model1))
 ``` 
-![image](https://user-images.githubusercontent.com/85897222/170875654-06ed6487-5421-4bca-8a2a-f58e1591d72e.png)
+![image](https://user-images.githubusercontent.com/85897222/170880148-97f84759-301b-4283-89f6-fe2b6dd2c620.png)
 
 ### 4f
 Visualisasikan data dengan ggplot2 <br>
-digunakan ggplot untuk memvisualisasikan data <br>
+digunakan library ggplot2 untuk memvisualisasikan data. <br>
 ```r
-install.packages("ggplot2")
 library("ggplot2")
 
-ggplot(dataoneway, aes(x = Group, y = Length)) + geom_boxplot(fill = "grey80", colour = "black") + scale_x_discrete() + xlab("Treatment Group") + ylab("Length (cm)")
+ggplot(kucingITS, aes(x = Group, y = Length)) + geom_boxplot(fill = "grey80", colour = "black") + scale_x_discrete() + xlab("Treatment Group") + ylab("Length (cm)")
 ``` 
-![image](https://user-images.githubusercontent.com/85897222/170875695-078185d6-4b27-4b86-82e2-68572c85ed53.png)
+![image](https://user-images.githubusercontent.com/85897222/170880204-b1d2147d-0718-4218-8f99-1b8398dba2af.png)
+
+## Soal 5
+Data yang digunakan merupakan hasil eksperimen yang dilakukan untuk mengetahui pengaruh suhu operasi (100˚C, 125˚C dan 150˚C) dan tiga jenis kaca pelat muka (A, B dan C) pada keluaran cahaya tabung osiloskop. Percobaan dilakukan sebanyak 27 kali dan didapat data sebagai berikut: Data Hasil Eksperimen. Dengan data tersebut: <br>
+![image](https://user-images.githubusercontent.com/85897222/170878525-69c706a8-728b-40a0-87a9-ea89a90271aa.png)
+
+### 5a
+Buatlah plot sederhana untuk visualisasi data <br>
+Untuk visualisaasi, digunakan qplot <br>
+```r
+qplot(x = Temp, y = Light, geom = "point", data = GLASSTEMPLIGHT) + facet_grid(.~Glass, labeller = label_both)
+```
+![image](https://user-images.githubusercontent.com/85897222/170878557-55f6d886-7582-4089-b879-1a749e029e0e.png)
+
+### 5b
+Lakukan uji ANOVA dua arah <br>
+Dibutuhkan independen variabel berupa factor. Kemudian dilakukan analisis varians menggunakan aov(). <br>
+```r
+GLASSTEMPLIGHT$Glass <- as.factor(GLASSTEMPLIGHT$Glass)
+GLASSTEMPLIGHT$Temp_Factor <- as.factor(GLASSTEMPLIGHT$Temp)
+str(GLASSTEMPLIGHT)
+
+anova <- aov(Light ~ Glass*Temp_Factor, data = GLASSTEMPLIGHT)
+summary(anova)
+```
+![image](https://user-images.githubusercontent.com/85897222/170878644-4164ddd5-b416-4d33-bf0a-27c33efd4d30.png)
+
+### 5c
+Tampilkan tabel dengan mean dan standar deviasi keluaran cahaya untuk setiap perlakuan (kombinasi kaca pelat muka dan suhu operasi) <br>
+Kita akan mengatur cara dalam urutan menurun, yang akan diperlukan untuk menambahkan huruf superskrip dari tes Tukey.
+```r
+data_summary <- group_by(GLASSTEMPLIGHT, Glass, Temp) %>%
+  summarise(mean=mean(Light), sd=sd(Light)) %>%
+  arrange(desc(mean))
+print(data_summary)
+```
+![image](https://user-images.githubusercontent.com/85897222/170878862-b73d8497-748c-46b4-9585-d2efc593ca4b.png)
+
+### 5d
+Lakukan uji Tukey <br>
+Perbandingan rata-rata dengan uji Tukey dapat dijalankan pada objek yang dihasilkan dari analisis varians. <br>
+```r
+tukey <- TukeyHSD(anova)
+print(tukey)
+```
+![image](https://user-images.githubusercontent.com/85897222/170878968-3b3deaff-d584-4f1b-b9ef-180f470000ab.png)
+
+### 5e
+TGunakan compact letter display untuk menunjukkan perbedaan signifikan antara uji Anova dan uji Tukey <br>
+Penggunaan huruf untuk menunjukkan perbedaan yang signifikan dalam perbandingan berpasangan, juga disebut tampilan huruf kompak, dan dapat menyederhanakan visualisasi dan pembahasan perbedaan yang signifikan antar sarana. Kita akan menggunakan fungsi multcompLetters4(). <br>
+```r
+tukey.cld <- multcompLetters4(anova, tukey)
+print(tukey.cld)
+```
+![image](https://user-images.githubusercontent.com/85897222/170878995-89d3a0ff-45c5-46ee-9bd2-512ef738c406.png)
